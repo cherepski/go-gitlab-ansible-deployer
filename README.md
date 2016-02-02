@@ -1,7 +1,11 @@
 # go-gitlab-ansible-deployer
 Go application to deploy GitLab repositories to production
 
+![alt tag](https://raw.githubusercontent.com/cherepski/go-gitlab-ansible-deployer/master/readme_screenshot.png)
+
 The aim of this project is to create a user friendly and flexible deployment of GitLab repositories to beta/production servers using Ansible playbooks.  Each GitLab repository should contain at the root of the project ```deployment/deploy.yaml```.  ```deploy.yaml``` is the Ansible playbook that will be run for a selected GitLab project that is chosen to be deployed.  There is an example Ansible playbook found in the root of the project ```deployment/deploy.yaml```.  This Go application expects Ansible to be installed on the same host it is running on.  For each deployment, the logged in user must leave a comment of why/what they are deploying and update the version number of the application.  The comment and version number are then git tagged to the project being deployed and also logged to the database to view previous history of deployments for all projects.
+
+If a project description on GitLab is of the form, "Description text : http://www.projectlocation.example.com", this application will parse the ' : ' and output the results on the index page of the deployer.
 
 Requirements:
 - Go >= 1.5
