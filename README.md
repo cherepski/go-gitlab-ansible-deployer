@@ -18,7 +18,7 @@ Requirements:
   - var database_port int = 3306
   - var ansible_private_key string = "your-private-key-location"
   - var ansible_extra_vars string = "your-ansible-extra-vars"
-  - var http_port = 5001
+  - var http_port int = 5001
 3. create MySQL database "your-database-username" at host "your-database-host" and load the MySQL create_initial.sql script
 4. go install github.com/cherepski/go-gitlab-ansible-deployer
 5. run the application and you should be able to login to your GitLab account and see your projects listed.
