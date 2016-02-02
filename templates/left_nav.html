@@ -1,0 +1,6 @@
+{{ define "left_nav" }}
+<ul class="nav nav-sidebar">
+    <li{{ if eq . "deploy" }} class="active"{{ end }}><a href="/">Deploy <span class="sr-only">(current)</span></a></li>
+    <li{{ if eq . "logs" }} class="active"{{ end }}><a href="/logs/">Logs</a></li>
+</ul>
+{{ end }}

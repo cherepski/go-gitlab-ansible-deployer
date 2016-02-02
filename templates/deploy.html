@@ -1,0 +1,117 @@
+{{ define "deploy" }}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ template "head" }}
+  </head>
+
+  <body>
+
+    {{ template "top_nav" . }}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          {{ template "left_nav" "deploy"}}
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Deploy {{ .Project.Name }}</h1>
+
+          <div class="table-responsive">
+            <table id="main" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Current Commit Hash</th>
+                  <th>Title</th>
+                  <th>Author</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ .Commit.ID }}</a></td>
+                  <td>{{ .Commit.Title }}</td>
+                  <td>{{ .Commit.AuthorName }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive">
+            <table id="main" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Previously Deployed Commit Hash</th>
+                  <th>Title</th>
+                  <th>Author</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    {{ if .PrevCommit }}
+                      <td>{{ .PrevCommit.ID }}</a></td>
+                      <td>{{ .PrevCommit.Title }}</td>
+                      <td>{{ .PrevCommit.AuthorName }}</td>
+                    {{ else }}
+                      <td>First Deployment</a></td>
+                      <td>First Deployment</td>
+                      <td>First Deployment</td>
+                    {{ end }}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <h3 class="panel-title">Changes that will be pushed</h3>
+              </div>
+              <div class="panel-body">
+                  {{ if .Compare }}
+                      {{ range .Compare.Diffs }}
+                      <div class="panel panel-default">
+                          <div class="panel-heading">{{ .NewPath }}</div>
+                          <div class="panel-body">
+                              <pre>
+                                {{ .Diff }}
+                              </pre>
+                          </div>
+                      </div>
+                      {{ end }}
+                  {{ else }}
+                      First Deployment
+                  {{ end }}
+              </div>
+          </div>
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <h3 class="panel-title">Playbook to be run</h3>
+              </div>
+              <div class="panel-body">
+                  <pre>
+                    {{ if .Deployable }}
+                        {{ .Playbook }}
+                    {{ else }}
+                        Playbook not found.  Please add deployment/deploy.yaml to the root of the project in order to deploy.
+                    {{ end }}
+                  </pre>
+              </div>
+          </div>
+          {{ if .Deployable }}
+          <form method="POST">
+              <div class="form-group">
+                  <label for="comment">Tell us why you are deploying to production</label>
+                  <input class="form-control" type="text" name="comment" placeholder="Comment" required id="comment">
+              </div>
+              <div class="form-group">
+                  <label for="version">Version</label>
+                  <input class="form-control" type="text" name="version" placeholder="{{ .SuggestedVersion }}" required id="version" value="{{ .SuggestedVersion }}">
+              </div>
+              <button type="submit" class="btn btn-default btn-primary">Deploy</button>
+          </form>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+
+    {{ template "bottom_js" }}
+
+  </body>
+</html>
+{{ end }}

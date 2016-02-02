@@ -1,0 +1,79 @@
+{{ define "index" }}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ template "head" }}
+  </head>
+
+  <body>
+
+    {{ template "top_nav" . }}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          {{ template "left_nav" "deploy"}}
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h2 class="sub-header">Choose a Project</h2>
+          <div class="table-responsive">
+            <table id="main" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Descrption</th>
+                  <th>Location</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{ range .Projects }}
+                    <tr>
+                      <td><a href="/deploy/?id={{ .Id }}">{{ .Name }}</a></td>
+                      <td>{{ .Description }}</td>
+                      <td>{{ if .Url }}<a href="{{ .Url }}">{{ end }}{{ .Url }}</a></td>
+                    </tr>
+                {{ end }}
+              </tbody>
+            </table>
+          </div>
+          <h2 class="sub-header">Last 5 Deployments</h2>
+          <div class="table-responsive">
+            <table id="logs" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Project</th>
+                  <th>Commit Hash</th>
+                  <th>Version</th>
+                  <th>Comment</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{ range .Logs }}
+                    <tr>
+                      <td><a href="/logs/?id={{ .Id }}">{{ .Id }}</a></td>
+                      <td>{{ .Project }}</td>
+                      <td>{{ .Commit_hash }}</td>
+                      <td>{{ .Version }}</td>
+                      <td>{{ .Comment }}</td>
+                      <td>{{ .Created_on }}</td>
+                    </tr>
+                {{ end }}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{ template "bottom_js" }}
+
+    <script type="text/javascript">
+        $(document).ready( function () {
+            $('#main').dataTable();
+            $('#logs').dataTable({"order": [[0, "desc"]]});
+        });
+    </script>
+  </body>
+</html>
+{{ end }}

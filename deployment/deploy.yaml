@@ -1,0 +1,12 @@
+---
+- hosts: the-ansible-host-to-deploy-to
+  vars:
+    repository: your-gitlab-repository
+    remote_install_path: your-remote-application-server-path 
+    branch: your-branch-to-deploy
+  remote_user: your-remote-user
+  tasks:
+  - name: deploy the latest code from git
+    git: repo={{ repository }}
+         dest={{ remote_install_path }}
+         version={{ branch }}

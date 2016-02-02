@@ -1,0 +1,57 @@
+{{ define "logs" }}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ template "head" }}
+  </head>
+
+  <body>
+
+    {{ template "top_nav" . }}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          {{ template "left_nav" "logs"}}
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h2 class="sub-header">Deployment Logs</h2>
+          <div class="table-responsive">
+            <table id="logs" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Project</th>
+                  <th>Commit Hash</th>
+                  <th>Version</th>
+                  <th>Comment</th>
+                  <th>Timestamp</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{ range .Logs }}
+                    <tr>
+                      <td><a href="/logs/?id={{ .Id }}">{{ .Id }}</a></td>
+                      <td>{{ .Project }}</td>
+                      <td>{{ .Commit_hash }}</td>
+                      <td>{{ .Version }}</td>
+                      <td>{{ .Comment }}</td>
+                      <td>{{ .Created_on }}</td>
+                    </tr>
+                {{ end }}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{ template "bottom_js" }}
+
+    <script type="text/javascript">
+        $(document).ready( function () {
+                $('#logs').dataTable({"order": [[0, "desc"]]});
+        });
+    </script>
+  </body>
+</html>
+{{ end }}

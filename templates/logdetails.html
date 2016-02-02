@@ -1,0 +1,59 @@
+{{ define "logdetails" }}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ template "head" }}
+  </head>
+
+  <body>
+
+    {{ template "top_nav" . }}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          {{ template "left_nav" "logs"}}
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Log Details for {{ .Log.Project }}</h1>
+
+          <div class="table-responsive">
+            <table id="main" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Commit Hash</th>
+                  <th>Version</th>
+                  <th>Comment</th>
+                  <th>Deployed By</th>
+                  <th>Created On</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ .Log.Commit_hash }}</a></td>
+                  <td>{{ .Log.Version }}</td>
+                  <td>{{ .Log.Comment }}</td>
+                  <td>{{ .Log.User }}</td>
+                  <td>{{ .Log.Created_on }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <h3 class="panel-title">Deployment Results</h3>
+              </div>
+              <div class="panel-body">
+                  <pre>
+                    {{ .Log.Results }}
+                  </pre>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{ template "bottom_js" }}
+
+  </body>
+</html>
+{{ end }}

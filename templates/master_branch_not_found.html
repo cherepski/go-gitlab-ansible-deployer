@@ -1,0 +1,27 @@
+{{ define "master_branch_not_found" }}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ template "head" }}
+  </head>
+
+  <body>
+
+    {{ template "top_nav" . }}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          {{ template "left_nav" "deploy"}}
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Deploy {{ .Project.Name }}</h1>
+          <h2 class="page-header">Master Branch Not Found</h2>
+        </div>
+      </div>
+    </div>
+
+    {{ template "bottom_js" }}
+
+  </body>
+</html>
+{{ end }}
