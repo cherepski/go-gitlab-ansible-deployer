@@ -22,8 +22,9 @@ var database_username string = "your-database-username"
 var database_password string = "your-database-password"
 var database_name string = "your-database-name"
 var database_port int = 3306
-var ansible_private_key = "your-private-key-location"
-var ansible_extra_vars = "your-ansible-extra-vars"
+var ansible_private_key string = "your-private-key-location"
+var ansible_extra_vars string = "your-ansible-extra-vars"
+var http_port int = 5001
 var templates *template.Template = template.Must(template.ParseGlob("templates/*"))
 var db *sql.DB
 
@@ -65,7 +66,7 @@ func main() {
 	http.Handle("/logs/", AuthHandlerFunc(Logs))
 	http.Handle("/login/", http.HandlerFunc(Login))
 	http.Handle("/logout/", AuthHandlerFunc(Logout))
-	err = http.ListenAndServe(":5001", nil)
+	err = http.ListenAndServe(fmt.Sprintf(":%d", http_port), nil)
 	if err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
